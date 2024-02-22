@@ -12,6 +12,7 @@ function goTown() {
     update(locations[2]);
   }
 
+
   //Store functions:
 
   function buyHealth() {
@@ -57,4 +58,10 @@ function goTown() {
     }
   }
 
-  
+  //Future Levels
+
+  function goForest(){};
+  function goGhostVillage(){};
+  function goVolcan(){};
+  function goDesert(){};
+  function goMountains(){};

@@ -6,12 +6,13 @@
 </div>
 
 <div>
-  <p>In this repo I used HTML5, CSS and JS.</p>ç
+   <h1>Tools and Ideas</h1>
+  <p>In this repo I used HTML5, CSS and JS.</p>
   <br>
-  <p>The idea is continue with the game in my free times.</p>
+  <p>The idea is continue with the game in my free times and add new levels, monsters and new bufs for the player.</p>
 </div>
 
 <footer>
-  <p>Created by: Raul Awad</p>
+  <h2>Created by: Raul Awad</h2>
 </footer>
 

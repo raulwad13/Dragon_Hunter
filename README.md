@@ -1,7 +1,7 @@
 
 <div id="header" align="center">
    <img src="https://w0.peakpx.com/wallpaper/921/922/HD-wallpaper-video-game-elden-ring-dragon.jpg" width="600"/>
-    <h1>Dragon Killer.🐱‍🐉</h1>
+    <h1>Dragon Hunter🐱‍🐉</h1>
     <h3>This is a game created from a practice exercise with JS, it is designed to practice logic and for pure entertainment :).</h3>
 </div>
 

@@ -25,7 +25,6 @@ function goTown() {
       text.innerText = "You do not have enough gold to buy health.";
     }
   }
-  
   function buyWeapon() {
     if (currentWeapon < weapons.length - 1) {
       if (gold >= 30) {

@@ -72,7 +72,7 @@ public class GameController {
             }
             case "ATTACK" -> attack(game);
             case "DODGE" -> dodge(game);
-            case "RUN" -> { game.screen = "TOWN"; game.monster = null; game.dodging = false; game.message = "You escaped safely."; }
+            case "RUN" -> { game.screen = "TOWN"; game.monster = null; game.message = "You escaped safely."; }
             case "RESTART" -> { games.put(id, new Game()); return view(id, games.get(id)); }
             default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown action: " + request.action());
         }

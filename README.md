@@ -6,7 +6,7 @@
 
 ## Project status
 
-The original HTML/CSS/JavaScript game remains the playable browser prototype. A **Java 17 + Spring Boot REST API** is now being introduced in `backend/` as the gameplay engine migration. The browser client has not yet been connected to the API, so this is an incremental migration rather than a completed replacement.
+The **Java 17 + Spring Boot REST API** in `backend/` now manages gameplay. The new browser interface uses HTML/CSS/JavaScript to send actions to the API and render its responses. This is a working architectural integration, but full end-to-end testing and game expansion remain in progress.
 
 ## Current features
 
@@ -25,7 +25,7 @@ The original HTML/CSS/JavaScript game remains the playable browser prototype. A 
 
 ## Run the original browser game
 
-Open `index.html` in a browser, or serve the repository with a local static web server.
+The current interface requires the Spring Boot API running locally. The original JavaScript prototype remains in `JS/index.js`, `JS/fight.js`, `JS/location.js` and `JS/easterEgg.js` for reference, but is no longer loaded by the main page.
 
 ## Run the Spring Boot API
 
@@ -37,6 +37,14 @@ mvn spring-boot:run
 ```
 
 The API listens on `http://localhost:8080`.
+
+In a **second terminal**, from the repository root, run:
+
+```bash
+python -m http.server 5500
+```
+
+Then open **http://localhost:5500** to play. The interface calls `http://localhost:8080/api/games`. Opening the HTML file directly may work in some browsers, but a local web server is recommended. Both services must be running.
 
 ### REST endpoints
 
@@ -61,10 +69,12 @@ Game sessions currently live in server memory and reset when the API restarts. P
 ## Roadmap
 
 - [x] Add a Spring Boot backend foundation and game-session API.
-- [ ] Connect the browser interface to the REST API.
-- [ ] Add automated tests and persistent game saves.
+- [x] Connect the browser interface to the REST API.
+- [x] Add an initial original pixel-inspired responsive UI.
+- [x] Add basic Spring Boot API integration test cases (not yet executed in this environment).
+- [ ] Execute and expand automated tests; add persistent game saves.
 - [ ] Expand locations, quests, equipment, skills and boss encounters.
-- [ ] Improve responsive visuals, accessibility and animations.
+- [ ] Add original sprite sheets, world exploration, accessibility refinements and animations.
 
 ## Author
 

@@ -9,13 +9,16 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+// Recibe las peticiones del navegador y gestiona cada partida.
 @RestController
 @RequestMapping("/api/games")
 @CrossOrigin(origins = "*")
 public class GameController {
+    // Cada partida tiene un identificador único y se guarda en memoria.
     private final Map<UUID, Game> games = new ConcurrentHashMap<>();
     private final Random random = new Random();
 
+    // Crea una partida nueva con la vida, el oro y el arma iniciales.
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public GameView createGame() {
@@ -30,6 +33,7 @@ public class GameController {
         return view(id, find(id));
     }
 
+    // Comprueba qué botón se ha pulsado y ejecuta su acción.
     @PostMapping("/{id}/actions")
     public synchronized GameView act(@PathVariable UUID id, @Valid @RequestBody ActionRequest request) {
         Game game = find(id);
@@ -85,6 +89,7 @@ public class GameController {
         return game;
     }
 
+    // Elige un monstruo y prepara sus puntos de vida.
     private void startFight(Game game, int index) {
         game.monster = MONSTERS[index];
         game.monsterHealth = game.monster.health();
@@ -93,7 +98,7 @@ public class GameController {
     }
 
     private void dodge(Game game) {
-        // Dodging takes a turn: there is a chance to avoid the enemy completely.
+        // Esquivar gasta un turno y puede evitar todo el daño.
         boolean success = random.nextBoolean();
         int damage = success ? 0 : Math.max(1, game.monster.level() * 2);
         game.health = Math.max(0, game.health - damage);
@@ -105,13 +110,14 @@ public class GameController {
         }
     }
 
+    // Calcula el daño, las recompensas y si la partida termina.
     private void attack(Game game) {
         Weapon weapon = WEAPONS[game.weaponIndex];
         int damage = weapon.damage() + random.nextInt(Math.max(1, game.xp + 1));
         game.monsterHealth = Math.max(0, game.monsterHealth - damage);
         game.message = "You hit " + game.monster.name() + " for " + damage + " damage.";
 
-        // A defeated monster cannot retaliate.
+        // Si el enemigo muere, no puede devolver el golpe.
         if (game.monsterHealth == 0) {
             if (game.monster.name().equals("Fatalis")) {
                 game.screen = "WON";
@@ -136,6 +142,7 @@ public class GameController {
         }
     }
 
+    // Devuelve al navegador solo los datos que necesita mostrar.
     private GameView view(UUID id, Game game) {
         return new GameView(id, game.screen, game.xp, game.health, game.gold,
                 WEAPONS[game.weaponIndex].name(), List.copyOf(game.inventory),
@@ -157,6 +164,7 @@ public class GameController {
             new Monster("slime", 2, 15), new Monster("fanged beast", 8, 60),
             new Monster("Fatalis", 20, 300)
     };
+    // Datos que cambian mientras el jugador avanza.
     private static final class Game {
         private String screen = "TOWN";
         private int xp = 0, health = 100, gold = 50, weaponIndex = 0, monsterHealth = 0;

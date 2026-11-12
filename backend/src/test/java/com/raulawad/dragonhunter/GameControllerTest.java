@@ -43,4 +43,36 @@ class GameControllerTest {
             .content("{\"action\":\"\"}"))
             .andExpect(status().isBadRequest());
     }
+    @Test
+    void cannotBuyItemsOutsideStore() throws Exception {
+        String response = mvc.perform(post("/api/games"))
+            .andReturn().getResponse().getContentAsString();
+        String id = mapper.readTree(response).get("id").asText();
+
+        mvc.perform(post("/api/games/" + id + "/actions")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{\"action\":\"BUY_WEAPON\"}"))
+            .andExpect(status().isConflict());
+    }
+
+    @Test
+    void canVisitStoreAndBuyWeapon() throws Exception {
+        String response = mvc.perform(post("/api/games"))
+            .andReturn().getResponse().getContentAsString();
+        String id = mapper.readTree(response).get("id").asText();
+
+        mvc.perform(post("/api/games/" + id + "/actions")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{\"action\":\"GO_STORE\"}"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.screen").value("STORE"));
+
+        mvc.perform(post("/api/games/" + id + "/actions")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{\"action\":\"BUY_WEAPON\"}"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.gold").value(20))
+            .andExpect(jsonPath("$.weapon").value("dagger"));
+    }
+
 }

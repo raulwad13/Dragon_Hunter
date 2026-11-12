@@ -51,7 +51,7 @@ public class GameController {
                 else { game.gold -= 30; game.weaponIndex++; game.inventory.add(WEAPONS[game.weaponIndex].name()); game.message = "You bought " + WEAPONS[game.weaponIndex].name() + "."; }
             }
             case "ATTACK" -> attack(game);
-            case "DODGE" -> game.message = "You dodge the next attack.";
+            case "DODGE" -> { game.dodging = true; game.message = "You prepare to dodge the next attack."; }
             case "RUN" -> { game.screen = "TOWN"; game.monster = null; game.message = "You escaped safely."; }
             case "RESTART" -> { games.put(id, new Game()); return view(id, games.get(id)); }
             default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown action: " + request.action());
@@ -80,7 +80,7 @@ public class GameController {
         Weapon weapon = WEAPONS[game.weaponIndex];
         int damage = weapon.damage() + random.nextInt(Math.max(1, game.xp + 1));
         game.monsterHealth -= damage;
-        int retaliation = Math.max(0, game.monster.level() * 3 - random.nextInt(Math.max(1, game.xp + 1)));
+        int retaliation = game.dodging ? 0 : Math.max(0, game.monster.level() * 3 - random.nextInt(Math.max(1, game.xp + 1)));\n        game.dodging = false;
         game.health -= retaliation;
         game.message = "You hit for " + damage + " damage. The enemy hits back for " + retaliation + ".";
         if (game.health <= 0) {
@@ -121,7 +121,7 @@ public class GameController {
     };
     private static final class Game {
         private String screen = "TOWN";
-        private int xp = 0, health = 100, gold = 50, weaponIndex = 0, monsterHealth = 0;
+        private int xp = 0, health = 100, gold = 50, weaponIndex = 0, monsterHealth = 0;\n        private boolean dodging = false;
         private Monster monster;
         private String message = "Welcome, hunter. The kingdom needs you.";
         private final List<String> inventory = new ArrayList<>(List.of("stick"));

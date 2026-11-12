@@ -1,33 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="./style.css">
-    <title>RPG - Dragon Repeller</title>
-  </head>
-  <body>
-    <div id="game">
-      <div id="stats">
-        <span class="stat">XP: <strong><span id="xpText">0</span></strong></span>
-        <span class="stat">Health: <strong><span id="healthText">100</span></strong></span>
-        <span class="stat">Gold: <strong><span id="goldText">50</span></strong></span>
-      </div>
-      <div id="controls">
-        <button id="button1">Go to store</button>
-        <button id="button2">Go to cave</button>
-        <button id="button3">Fight dragon</button>
-      </div>
-      <div id="monsterStats">
-        <span class="stat">Monster Name: <strong><span id="monsterName"></span></strong></span>
-        <span class="stat">Health: <strong><span id="monsterHealth"></span></strong></span>
-      </div>
-      <div id="text">
-        Welcome to Dragon Hunter. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.
-      </div>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1c2940">
+  <title>Dragon Hunter · Pixel Quest</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="JS/api-client.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div><p class="eyebrow">PIXEL QUEST · RPG</p><h1>🐉 Dragon Hunter</h1></div>
+      <span id="connection" class="connection" role="status">Conectando…</span>
+    </header>
+    <div class="layout">
+      <section class="game-panel" aria-label="Escenario de aventura">
+        <div class="scene-head"><span id="sceneName">PLAZA DEL PUEBLO</span><span>✦ CAPÍTULO 01</span></div>
+        <div id="scene" class="scene town" aria-hidden="true">
+          <div class="pixel-sun"></div><div class="cloud cloud-one"></div><div class="cloud cloud-two"></div>
+          <div class="mountains"></div><div class="ground"></div>
+          <div class="tree tree-one"></div><div class="tree tree-two"></div>
+          <div class="path"></div><div class="hero"><span class="hero-hair"></span><span class="hero-face"></span><span class="hero-body"></span><span class="hero-legs"></span></div>
+          <div id="enemySprite" class="enemy-sprite" hidden>🐲</div>
+        </div>
+        <div class="dialogue" aria-live="polite">
+          <div class="dialogue-title">✦ DIARIO DE AVENTURA</div>
+          <p id="story">Cargando aventura…</p>
+        </div>
+        <div id="actions" class="actions" aria-label="Acciones disponibles"></div>
+      </section>
+      <aside class="sidebar">
+        <section class="panel">
+          <h2>⚔️ HÉROE</h2>
+          <div class="stat-row"><span>❤️ Vida</span><strong id="healthText">100 / 100</strong></div>
+          <div class="meter"><div id="healthBar" class="meter-fill health-fill"></div></div>
+          <div class="stat-row"><span>✨ Experiencia</span><strong id="xpText">0 XP</strong></div>
+          <div class="stat-row"><span>🪙 Oro</span><strong id="goldText">50</strong></div>
+          <div class="stat-row"><span>🗡️ Arma</span><strong id="weaponText">Palo</strong></div>
+        </section>
+        <section class="panel">
+          <h2>🎒 INVENTARIO</h2><ul id="inventory"><li>Palo</li></ul>
+        </section>
+        <section id="monsterPanel" class="panel monster-panel" hidden>
+          <h2>☠️ ENEMIGO</h2>
+          <div class="stat-row"><span id="monsterName">Monstruo</span><strong id="monsterHealth">0 PV</strong></div>
+          <div class="meter"><div id="monsterBar" class="meter-fill monster-fill"></div></div>
+        </section>
+        <section class="panel info-panel">
+          <h2>🎮 CÓMO JUGAR</h2>
+          <p>Explora el pueblo, visita la tienda, lucha contra monstruos y prepárate para derrotar a Fatalis.</p>
+          <button id="newGame" class="secondary-button" type="button">↻ Nueva partida</button>
+        </section>
+      </aside>
     </div>
-    <script src="JS/location.js"></script>
-    <script src="JS/fight.js"></script>
-    <script src="JS/easterEgg.js"></script>
-    <script src="JS/index.js"></script>
-  </body>
+    <footer>Un RPG original de fantasía · Java + Spring Boot + HTML/CSS/JS</footer>
+  </main>
+</body>
 </html>

@@ -34,8 +34,15 @@ public class GameController {
     public GameView act(@PathVariable UUID id, @Valid @RequestBody ActionRequest request) {
         Game game = find(id);
         String action = request.action().trim().toUpperCase(Locale.ROOT);
+        if ((game.screen.equals("WON") || game.screen.equals("LOST")) && !action.equals("RESTART")) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Restart to play again.");
+        }
+        if ((action.equals("ATTACK") || action.equals("DODGE") || action.equals("RUN"))
+                && !game.screen.equals("FIGHT")) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "No active combat.");
+        }
         switch (action) {
-            case "GO_TOWN" -> { game.screen = "TOWN"; game.message = "You return to the town square."; game.monster = null; }
+            case "GO_TOWN" -> { game.screen = "TOWN"; game.message = "You return to the town square."; game.monster = null; game.dodging = false; }
             case "GO_STORE" -> { game.screen = "STORE"; game.message = "Welcome to the store. Spend your gold wisely."; }
             case "GO_CAVE" -> { game.screen = "CAVE"; game.message = "The cave is dark. Choose your opponent."; }
             case "FIGHT_SLIME" -> startFight(game, 0);
@@ -43,7 +50,7 @@ public class GameController {
             case "FIGHT_DRAGON" -> startFight(game, 2);
             case "BUY_HEALTH" -> {
                 if (game.gold < 10) game.message = "You need 10 gold to buy health.";
-                else { game.gold -= 10; game.health = Math.min(100, game.health + 10); game.message = "You restored 10 health."; }
+                else { game.gold -= 10; game.health = Math.min(100, game.health + 10); game.message = "You restored up to 10 health."; }
             }
             case "BUY_WEAPON" -> {
                 if (game.weaponIndex >= 3) game.message = "You already own the strongest weapon.";
@@ -52,7 +59,7 @@ public class GameController {
             }
             case "ATTACK" -> attack(game);
             case "DODGE" -> { game.dodging = true; game.message = "You prepare to dodge the next attack."; }
-            case "RUN" -> { game.screen = "TOWN"; game.monster = null; game.message = "You escaped safely."; }
+            case "RUN" -> { game.screen = "TOWN"; game.monster = null; game.dodging = false; game.message = "You escaped safely."; }
             case "RESTART" -> { games.put(id, new Game()); return view(id, games.get(id)); }
             default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown action: " + request.action());
         }
@@ -66,6 +73,7 @@ public class GameController {
     }
 
     private void startFight(Game game, int index) {
+        game.dodging = false;
         game.monster = MONSTERS[index];
         game.monsterHealth = game.monster.health();
         game.screen = "FIGHT";

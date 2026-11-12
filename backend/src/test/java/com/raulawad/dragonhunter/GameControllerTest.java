@@ -1,6 +1,7 @@
 package com.raulawad.dragonhunter;
 
 import org.junit.jupiter.api.Test;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class GameControllerTest {
     @Autowired MockMvc mvc;
+    @Autowired ObjectMapper mapper;
 
     @Test
     void createsNewGameWithStartingStats() throws Exception {
@@ -33,9 +35,9 @@ class GameControllerTest {
 
     @Test
     void validatesActionPayload() throws Exception {
-        String id = mvc.perform(post("/api/games"))
-            .andReturn().getResponse().getContentAsString()
-            .replaceAll(".*\\\"id\\\":\\\"([^\\\"]+)\\\".*", "$1");
+        String response = mvc.perform(post("/api/games"))
+            .andReturn().getResponse().getContentAsString();
+        String id = mapper.readTree(response).get("id").asText();
         mvc.perform(post("/api/games/" + id + "/actions")
             .contentType(MediaType.APPLICATION_JSON)
             .content("{\"action\":\"\"}"))

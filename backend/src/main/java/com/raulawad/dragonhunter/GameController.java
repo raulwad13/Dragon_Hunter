@@ -31,7 +31,7 @@ public class GameController {
     }
 
     @PostMapping("/{id}/actions")
-    public GameView act(@PathVariable UUID id, @Valid @RequestBody ActionRequest request) {
+    public synchronized GameView act(@PathVariable UUID id, @Valid @RequestBody ActionRequest request) {
         Game game = find(id);
         String action = request.action().trim().toUpperCase(Locale.ROOT);
         if ((game.screen.equals("WON") || game.screen.equals("LOST")) && !action.equals("RESTART")) {
@@ -41,15 +41,28 @@ public class GameController {
                 && !game.screen.equals("FIGHT")) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "No active combat.");
         }
+        if (game.screen.equals("FIGHT") && !Set.of("ATTACK", "DODGE", "RUN", "RESTART").contains(action)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Finish or leave combat first.");
+        }
+        if (Set.of("BUY_HEALTH", "BUY_WEAPON").contains(action) && !game.screen.equals("STORE")) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Visit the store first.");
+        }
+        if (Set.of("FIGHT_SLIME", "FIGHT_BEAST").contains(action) && !game.screen.equals("CAVE")) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Visit the cave first.");
+        }
+        if (action.equals("FIGHT_DRAGON") && !game.screen.equals("TOWN")) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Return to town first.");
+        }
         switch (action) {
-            case "GO_TOWN" -> { game.screen = "TOWN"; game.message = "You return to the town square."; game.monster = null; game.dodging = false; }
+            case "GO_TOWN" -> { game.screen = "TOWN"; game.message = "You return to the town square."; game.monster = null; }
             case "GO_STORE" -> { game.screen = "STORE"; game.message = "Welcome to the store. Spend your gold wisely."; }
             case "GO_CAVE" -> { game.screen = "CAVE"; game.message = "The cave is dark. Choose your opponent."; }
             case "FIGHT_SLIME" -> startFight(game, 0);
             case "FIGHT_BEAST" -> startFight(game, 1);
             case "FIGHT_DRAGON" -> startFight(game, 2);
             case "BUY_HEALTH" -> {
-                if (game.gold < 10) game.message = "You need 10 gold to buy health.";
+                if (game.health >= 100) game.message = "Your health is already full.";
+                else if (game.gold < 10) game.message = "You need 10 gold to buy health.";
                 else { game.gold -= 10; game.health = Math.min(100, game.health + 10); game.message = "You restored up to 10 health."; }
             }
             case "BUY_WEAPON" -> {
@@ -58,7 +71,7 @@ public class GameController {
                 else { game.gold -= 30; game.weaponIndex++; game.inventory.add(WEAPONS[game.weaponIndex].name()); game.message = "You bought " + WEAPONS[game.weaponIndex].name() + "."; }
             }
             case "ATTACK" -> attack(game);
-            case "DODGE" -> { game.dodging = true; game.message = "You prepare to dodge the next attack."; }
+            case "DODGE" -> dodge(game);
             case "RUN" -> { game.screen = "TOWN"; game.monster = null; game.dodging = false; game.message = "You escaped safely."; }
             case "RESTART" -> { games.put(id, new Game()); return view(id, games.get(id)); }
             default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown action: " + request.action());
@@ -73,37 +86,53 @@ public class GameController {
     }
 
     private void startFight(Game game, int index) {
-        game.dodging = false;
         game.monster = MONSTERS[index];
         game.monsterHealth = game.monster.health();
         game.screen = "FIGHT";
         game.message = "A " + game.monster.name() + " appears!";
     }
 
-    private void attack(Game game) {
-        if (game.monster == null || game.screen.equals("WON") || game.screen.equals("LOST")) {
-            game.message = "There is no active enemy.";
-            return;
+    private void dodge(Game game) {
+        // Dodging takes a turn: there is a chance to avoid the enemy completely.
+        boolean success = random.nextBoolean();
+        int damage = success ? 0 : Math.max(1, game.monster.level() * 2);
+        game.health = Math.max(0, game.health - damage);
+        game.message = success ? "Great dodge! You avoided the attack."
+                : "The enemy caught you while dodging. You lost " + damage + " health.";
+        if (game.health == 0) {
+            game.screen = "LOST";
+            game.message += " You were defeated.";
         }
+    }
+
+    private void attack(Game game) {
         Weapon weapon = WEAPONS[game.weaponIndex];
         int damage = weapon.damage() + random.nextInt(Math.max(1, game.xp + 1));
-        game.monsterHealth -= damage;
-        int retaliation = game.dodging ? 0 : Math.max(0, game.monster.level() * 3 - random.nextInt(Math.max(1, game.xp + 1)));
-        game.dodging = false;
-        game.health -= retaliation;
-        game.message = "You hit for " + damage + " damage. The enemy hits back for " + retaliation + ".";
-        if (game.health <= 0) {
-            game.health = 0; game.screen = "LOST"; game.message += " You were defeated.";
-        } else if (game.monsterHealth <= 0) {
+        game.monsterHealth = Math.max(0, game.monsterHealth - damage);
+        game.message = "You hit " + game.monster.name() + " for " + damage + " damage.";
+
+        // A defeated monster cannot retaliate.
+        if (game.monsterHealth == 0) {
             if (game.monster.name().equals("Fatalis")) {
-                game.screen = "WON"; game.message = "Fatalis has fallen. You saved the kingdom!";
+                game.screen = "WON";
+                game.message += " Fatalis has fallen. You saved the kingdom!";
             } else {
-                game.gold += game.monster.level() * 7;
+                int reward = game.monster.level() * 7;
+                game.gold += reward;
                 game.xp += game.monster.level();
                 game.screen = "CAVE";
-                game.message += " Victory! You earned " + (game.monster.level() * 7) + " gold and " + game.monster.level() + " XP.";
+                game.message += " Victory! +" + reward + " gold and +" + game.monster.level() + " XP.";
                 game.monster = null;
             }
+            return;
+        }
+
+        int retaliation = Math.max(1, game.monster.level() * 3 - random.nextInt(Math.max(1, game.xp + 1)));
+        game.health = Math.max(0, game.health - retaliation);
+        game.message += " The enemy hits back for " + retaliation + ".";
+        if (game.health == 0) {
+            game.screen = "LOST";
+            game.message += " You were defeated.";
         }
     }
 
@@ -131,7 +160,6 @@ public class GameController {
     private static final class Game {
         private String screen = "TOWN";
         private int xp = 0, health = 100, gold = 50, weaponIndex = 0, monsterHealth = 0;
-        private boolean dodging = false;
         private Monster monster;
         private String message = "Welcome, hunter. The kingdom needs you.";
         private final List<String> inventory = new ArrayList<>(List.of("stick"));

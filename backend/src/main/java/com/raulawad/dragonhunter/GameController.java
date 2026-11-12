@@ -80,7 +80,8 @@ public class GameController {
         Weapon weapon = WEAPONS[game.weaponIndex];
         int damage = weapon.damage() + random.nextInt(Math.max(1, game.xp + 1));
         game.monsterHealth -= damage;
-        int retaliation = game.dodging ? 0 : Math.max(0, game.monster.level() * 3 - random.nextInt(Math.max(1, game.xp + 1)));\n        game.dodging = false;
+        int retaliation = game.dodging ? 0 : Math.max(0, game.monster.level() * 3 - random.nextInt(Math.max(1, game.xp + 1)));
+        game.dodging = false;
         game.health -= retaliation;
         game.message = "You hit for " + damage + " damage. The enemy hits back for " + retaliation + ".";
         if (game.health <= 0) {
@@ -121,7 +122,8 @@ public class GameController {
     };
     private static final class Game {
         private String screen = "TOWN";
-        private int xp = 0, health = 100, gold = 50, weaponIndex = 0, monsterHealth = 0;\n        private boolean dodging = false;
+        private int xp = 0, health = 100, gold = 50, weaponIndex = 0, monsterHealth = 0;
+        private boolean dodging = false;
         private Monster monster;
         private String message = "Welcome, hunter. The kingdom needs you.";
         private final List<String> inventory = new ArrayList<>(List.of("stick"));

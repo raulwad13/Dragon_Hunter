@@ -2,15 +2,16 @@
   <img src="assets/background/fondo.jpg" width="600" alt="Ilustración de fondo de Dragon Hunter"/>
   <h1>🐉 Dragon Hunter</h1>
   <p>Prototipo de RPG para navegador: explora, consigue oro, mejora tu equipo y enfréntate a monstruos cada vez más poderosos.</p>
+  <p><a href="https://raulwad13.github.io/Dragon_Hunter/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE_JUGAR_AHORA-Dragon_Hunter-2ea44f?style=for-the-badge" alt="Jugar ahora a Dragon Hunter"/></a></p>
 </div>
 
 **[🎮 Jugar ahora — demo para navegador y móvil](https://raulwad13.github.io/Dragon_Hunter/)**
 
-> **Modo demo:** en GitHub Pages, el juego utiliza una simulación JavaScript local para poder jugar sin servidor. La versión completa con backend Java/Spring Boot sigue requiriendo ejecución local. El modo demo aún debe comprobarse manualmente en un móvil real.
+> **Modo demo:** en GitHub Pages, el juego utiliza una simulación JavaScript local para poder jugar sin servidor. La versión completa con backend Java/Spring Boot sigue requiriendo ejecución local. El modo demo ha sido probado en un móvil; los cambios gráficos más recientes aún están pendientes de comprobar.
 
 ## Estado del proyecto
 
-El backend REST de **Java 17 y Spring Boot** en `backend/` gestiona la lógica y el estado de la partida. La interfaz HTML, CSS y JavaScript envía acciones a esa API. En GitHub Pages se activa una versión autónoma de demostración, sin persistencia ni conexión al backend. Queda pendiente comprobarla desde un móvil real.
+El backend REST de **Java 17 y Spring Boot** en `backend/` gestiona la lógica y el estado de la partida. La interfaz HTML, CSS y JavaScript envía acciones a esa API. En GitHub Pages se activa una versión autónoma de demostración, sin persistencia ni conexión al backend. El acceso y las acciones principales se han comprobado desde un móvil.
 
 ## Funcionalidades
 

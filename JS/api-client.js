@@ -1,7 +1,9 @@
 "use strict";
 
 // Browser presentation only: Java/Spring Boot owns the game rules and state.
-const API_BASE = "http://localhost:8080/api/games";
+// En móvil, localhost sería el propio teléfono, no el ordenador.
+// Usamos el mismo nombre de equipo que sirve la página.
+const API_BASE = `${window.location.protocol}//${window.location.hostname}:8080/api/games`;
 const labels = {
   TOWN: "PLAZA DEL PUEBLO", STORE: "TIENDA DEL VIAJERO",
   CAVE: "CUEVA DE LAS SOMBRAS", FIGHT: "¡COMBATE!",

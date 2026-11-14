@@ -4,11 +4,13 @@
   <p>Prototipo de RPG para navegador: explora, consigue oro, mejora tu equipo y enfréntate a monstruos cada vez más poderosos.</p>
 </div>
 
-> **Estado de la demo:** la interfaz publicada en GitHub Pages necesita una API Java/Spring Boot que no se ejecuta en GitHub Pages. Por ahora, **no es posible garantizar que se pueda jugar desde el enlace público**, especialmente desde el móvil. Consulta las instrucciones de ejecución local.
+**[🎮 Jugar ahora — demo para navegador y móvil](https://raulwad13.github.io/Dragon_Hunter/)**
+
+> **Modo demo:** en GitHub Pages, el juego utiliza una simulación JavaScript local para poder jugar sin servidor. La versión completa con backend Java/Spring Boot sigue requiriendo ejecución local. El modo demo aún debe comprobarse manualmente en un móvil real.
 
 ## Estado del proyecto
 
-El backend REST de **Java 17 y Spring Boot** en `backend/` gestiona la lógica y el estado de la partida. La interfaz HTML, CSS y JavaScript envía acciones a esa API. La integración existe en el código, pero queda pendiente comprobar el recorrido completo en producción y desde un móvil real.
+El backend REST de **Java 17 y Spring Boot** en `backend/` gestiona la lógica y el estado de la partida. La interfaz HTML, CSS y JavaScript envía acciones a esa API. En GitHub Pages se activa una versión autónoma de demostración, sin persistencia ni conexión al backend. Queda pendiente comprobarla desde un móvil real.
 
 ## Funcionalidades
 
@@ -76,7 +78,8 @@ Las partidas se almacenan en memoria y se reinician cuando se reinicia la API. T
 
 ## Pendiente para el portfolio
 
-- [ ] Publicar una demo jugable con un backend accesible y configurado correctamente.
+- [x] Añadir modo demo JavaScript sin backend para GitHub Pages (pendiente de prueba manual).
+- [ ] Publicar la versión integrada con un backend accesible y configurado correctamente.
 - [ ] Verificar el juego completo desde navegador y móvil.
 - [ ] Ampliar las pruebas automáticas y comprobar la integración de extremo a extremo.
 - [ ] Incorporar guardado de partidas y ampliar contenido y accesibilidad.

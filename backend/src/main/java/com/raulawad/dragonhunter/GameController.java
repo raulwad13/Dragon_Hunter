@@ -71,8 +71,8 @@ public class GameController {
             }
             case "BUY_WEAPON" -> {
                 if (game.weaponIndex >= 3) game.message = "You already own the strongest weapon.";
-                else if (game.gold < 30) game.message = "You need 30 gold to buy a weapon.";
-                else { game.gold -= 30; game.weaponIndex++; game.inventory.add(WEAPONS[game.weaponIndex].name()); game.message = "You bought " + WEAPONS[game.weaponIndex].name() + "."; }
+                else if (game.gold < (game.weaponIndex + 1) * 30) game.message = "You need " + ((game.weaponIndex + 1) * 30) + " gold to buy a weapon.";
+                else { game.gold -= (game.weaponIndex + 1) * 30; game.weaponIndex++; game.inventory.add(WEAPONS[game.weaponIndex].name()); game.message = "You bought " + WEAPONS[game.weaponIndex].name() + "."; }
             }
             case "ATTACK" -> attack(game);
             case "DODGE" -> dodge(game);

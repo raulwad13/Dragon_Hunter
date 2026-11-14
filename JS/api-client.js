@@ -10,12 +10,12 @@ const labels = {
   WON: "¡VICTORIA!", LOST: "FIN DE LA AVENTURA"
 };
 const actionsByScreen = {
-  TOWN: [["🏪 Ir a la tienda", "GO_STORE"], ["⛰️ Explorar cueva", "GO_CAVE"], ["🐉 Desafiar a Fatalis", "FIGHT_DRAGON"]],
-  STORE: [["❤️ Comprar vida · 10 oro", "BUY_HEALTH"], ["🗡️ Mejorar arma · 30 oro", "BUY_WEAPON"], ["↩ Volver al pueblo", "GO_TOWN"]],
-  CAVE: [["🟢 Luchar contra slime", "FIGHT_SLIME"], ["🐺 Luchar contra bestia", "FIGHT_BEAST"], ["↩ Volver al pueblo", "GO_TOWN"]],
-  FIGHT: [["⚔️ Atacar", "ATTACK"], ["🛡️ Esquivar", "DODGE"], ["🏃 Huir", "RUN"]],
-  WON: [["🎉 Jugar otra vez", "RESTART"]],
-  LOST: [["↻ Volver a intentarlo", "RESTART"]]
+  TOWN: [["Ir a la tienda", "GO_STORE"], ["Explorar cueva", "GO_CAVE"], ["Desafiar a Fatalis", "FIGHT_DRAGON"]],
+  STORE: [["Comprar vida · 10 oro", "BUY_HEALTH"], ["Mejorar arma · 30 oro", "BUY_WEAPON"], ["Volver al pueblo", "GO_TOWN"]],
+  CAVE: [["Luchar contra slime", "FIGHT_SLIME"], ["Luchar contra bestia", "FIGHT_BEAST"], ["Volver al pueblo", "GO_TOWN"]],
+  FIGHT: [["Atacar", "ATTACK"], ["Esquivar", "DODGE"], ["Huir", "RUN"]],
+  WON: [["Jugar otra vez", "RESTART"]],
+  LOST: [["Volver a intentarlo", "RESTART"]]
 };
 const $ = (selector) => document.querySelector(selector);
 let game = null;
@@ -89,7 +89,7 @@ function render(state) {
     $("#monsterHealth").textContent = state.monsterHealth + " PV";
     const maxHealth = { slime: 15, "fanged beast": 60, Fatalis: 300 }[state.monster] || 100;
     $("#monsterBar").style.width = Math.min(100, state.monsterHealth / maxHealth * 100) + "%";
-    $("#enemySprite").textContent = state.monster === "slime" ? "🟢" : state.monster === "Fatalis" ? "🐉" : "🐺";
+    $("#enemySprite").src = "assets/sprites/" + (state.monster === "slime" ? "slime" : state.monster === "Fatalis" ? "dragon" : "beast") + ".svg";
   }
   const scene = $("#scene");
   scene.className = "scene " + state.screen.toLowerCase();
@@ -99,6 +99,7 @@ function render(state) {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = label;
+    button.dataset.action = action;
     button.disabled = busy;
     button.addEventListener("click", () => doAction(action));
     actionBox.append(button);

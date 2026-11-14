@@ -22,3 +22,18 @@
 .actions button[data-action="ATTACK"]::before,.actions button[data-action="BUY_WEAPON"]::before{background:linear-gradient(135deg,transparent 38%,#d8e3eb 38% 58%,#71513e 58% 69%,transparent 69%);border:0}
 .actions button[data-action="BUY_HEALTH"]::before{background:#b6384d;clip-path:polygon(50% 100%,0 45%,0 18%,20% 0,50% 18%,80% 0,100% 18%,100% 45%);border:0}
 @media(max-width:480px){.enemy-sprite{width:78px;height:78px;right:12%}.hero{left:42%}}
+
+/* Iconos asociados a las acciones del juego */
+.actions button[data-action="GO_STORE"]::before{background:url("assets/icons/store.svg") center/contain no-repeat;border:0;clip-path:none}
+.actions button[data-action="GO_CAVE"]::before{background:url("assets/icons/cave.svg") center/contain no-repeat;border:0;clip-path:none}
+.actions button[data-action="GO_TOWN"]::before{background:url("assets/icons/return.svg") center/contain no-repeat;border:0;clip-path:none}
+.actions button[data-action="RUN"]::before{background:url("assets/icons/return.svg") center/contain no-repeat;border:0;clip-path:none}
+.actions button[data-action="FIGHT_DRAGON"]::before{background:url("assets/icons/dragon.svg") center/contain no-repeat;border:0;clip-path:none}
+.actions button[data-action="ATTACK"]::before{background:url("assets/icons/sword.svg") center/contain no-repeat;border:0;clip-path:none}
+.actions button[data-action="DODGE"]::before{background:url("assets/icons/shield.svg") center/contain no-repeat;border:0;clip-path:none}
+.actions button[data-action="BUY_HEALTH"]::before{background:url("assets/icons/potion.svg") center/contain no-repeat;border:0;clip-path:none}
+.actions button[data-action="BUY_WEAPON"]::before{background:url("assets/icons/sword.svg") center/contain no-repeat;border:0;clip-path:none}
+.actions button[data-action="RESTART"]::before{background:url("assets/icons/return.svg") center/contain no-repeat;border:0;clip-path:none}
+.actions button[data-action="FIGHT_SLIME"]::before,.actions button[data-action="FIGHT_BEAST"]::before{width:30px;height:30px}
+.enemy-sprite{width:138px;height:138px;right:15%;bottom:19%;filter:drop-shadow(5px 8px 0 #12152588)}
+@media(max-width:480px){.enemy-sprite{width:106px;height:106px;right:7%;bottom:20%}}

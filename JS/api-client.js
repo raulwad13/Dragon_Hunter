@@ -89,7 +89,7 @@ function render(state) {
     $("#monsterHealth").textContent = state.monsterHealth + " PV";
     const maxHealth = { slime: 15, "fanged beast": 60, Fatalis: 300 }[state.monster] || 100;
     $("#monsterBar").style.width = Math.min(100, state.monsterHealth / maxHealth * 100) + "%";
-    $("#enemySprite").src = "assets/sprites/" + (state.monster === "slime" ? "slime" : state.monster === "Fatalis" ? "dragon" : "beast") + ".svg";
+    $("#enemySprite").src = "assets/sprites/" + (state.monster === "slime" ? "slime" : state.monster === "Fatalis" ? "dragon" : "beast") + ".svg" + (state.monster === "Fatalis" ? "?v=1896166" : "");
   }
   const scene = $("#scene");
   scene.className = "scene " + state.screen.toLowerCase();

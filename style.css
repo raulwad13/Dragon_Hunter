@@ -46,3 +46,8 @@
 .scene.won{background:#688f65 url("assets/background/town.svg") center/cover no-repeat}
 .scene.lost{background:#584b57 url("assets/background/fight.svg") center/cover no-repeat;filter:grayscale(.8)}
 .scene .pixel-sun,.scene .cloud,.scene .mountains,.scene .ground,.scene .tree,.scene .path{display:none}
+
+/* El jefe final debe destacar frente al resto de enemigos. */
+.scene.fight:has(#enemySprite[src*="dragon.svg"]) .enemy-sprite{width:210px;height:176px;right:7%;bottom:12%;animation:boss-hover 1.7s ease-in-out infinite}
+@keyframes boss-hover{50%{transform:translateY(-9px)}}
+@media(max-width:480px){.scene.fight:has(#enemySprite[src*="dragon.svg"]) .enemy-sprite{width:158px;height:145px;right:1%;bottom:14%}}

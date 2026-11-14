@@ -1,31 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" shape-rendering="crispEdges">
-<defs><linearGradient id="wing" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#772c46"/><stop offset="1" stop-color="#30233c"/></linearGradient></defs>
-<!-- Cola larga y puntiaguda -->
-<path d="M158 119 187 122 207 141 224 145 210 152 193 149 176 138 155 139Z" fill="#292633" stroke="#100e1b" stroke-width="5"/>
-<path d="m207 141 21-5-6 11-10 5Z" fill="#a5444b" stroke="#100e1b" stroke-width="3"/>
-<!-- Alas enormes con membranas rojizas -->
-<path d="M110 95 88 30 59 7 65 54 32 19 44 80 9 61 40 117 84 127Z" fill="url(#wing)" stroke="#12101d" stroke-width="6"/>
-<path d="M132 96 166 17 194 4 183 53 224 27 209 87 237 74 214 126 161 132Z" fill="url(#wing)" stroke="#12101d" stroke-width="6"/>
-<path d="M110 96 88 30 78 108M110 96 44 80 78 108M132 96 166 17 168 107M132 96 209 87 168 107" fill="none" stroke="#ae4550" stroke-width="4"/>
-<!-- Cuerpo con cuello y espinas -->
-<path d="M79 99 95 70 119 63 145 79 165 102 166 134 148 154 103 157 78 139Z" fill="#282736" stroke="#0c101c" stroke-width="6"/>
-<path d="m102 75-8-23 18 15 4-26 14 27 10-17 4 27" fill="#4a3545" stroke="#0e101b" stroke-width="4"/>
-<path d="M104 96 120 86 143 101 148 130 133 145 107 139 95 117Z" fill="#51404d"/>
-<path d="m114 101 17 5m-19 9 23 4m-21 8 21 3" stroke="#a5484f" stroke-width="4"/>
-<!-- Cuatro patas con garras -->
-<path d="M94 134 78 154 73 167 98 168 106 145M145 134 155 157 178 165 151 169 133 150" fill="#242532" stroke="#0c101c" stroke-width="6"/>
-<path d="m73 167-8 8 15-3 8 3 10-7m54 1 8 7 9-5 9-6" fill="#c1a9a4" stroke="#171421" stroke-width="3"/>
-<!-- Cuello largo, cabeza reptiliana de perfil -->
-<path d="M104 95 87 76 72 60 52 53 42 61 34 69 16 74 9 86 34 92 56 88 74 99 94 116Z" fill="#252631" stroke="#0d101b" stroke-width="6"/>
-<!-- Cuernos largos y espinas del cráneo -->
-<path d="m52 55-4-32 15 24 9-29 6 41" fill="#393340" stroke="#0d101b" stroke-width="5"/>
-<path d="m85 76 2-25 12 31 5-18 8 30" fill="#443342" stroke="#10101b" stroke-width="4"/>
-<!-- Mandíbula, boca y dientes -->
-<path d="M13 84 33 84 50 79 63 87 45 99 22 97Z" fill="#572c38" stroke="#0d101b" stroke-width="4"/>
-<path d="m21 85 4 7 5-7 6 7 5-8 5 7 5-8" fill="#f0dfc2"/>
-<!-- Ojo incandescente y narinas -->
-<rect x="43" y="65" width="10" height="6" fill="#f34c37"/><rect x="46" y="65" width="4" height="3" fill="#fff0a8"/>
-<rect x="17" y="78" width="5" height="3" fill="#b84c4b"/>
-<!-- Escamas de luz -->
-<path d="m102 89 15-5 12 8-14 5m23 12 12 8-11 4" fill="#833b49"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" shape-rendering="crispEdges">
+<title>Fatalis, dragón negro de cuatro patas con alas desplegadas</title>
+<!-- Alas separadas del cuerpo: membranas oscuras y dedos visibles -->
+<path d="M150 111 117 39 71 6 82 72 33 31 57 106 8 89 54 151 129 155Z" fill="#6a3549" stroke="#0e111d" stroke-width="7" stroke-linejoin="miter"/>
+<path d="M165 104 221 25 266 8 252 71 304 39 281 113 317 99 272 157 191 157Z" fill="#653347" stroke="#0e111d" stroke-width="7" stroke-linejoin="miter"/>
+<path d="M150 113 117 39 106 135M150 113 33 31 106 135M150 113 8 89 106 135M165 108 221 25 211 139M165 108 304 39 211 139M165 108 317 99 211 139" fill="none" stroke="#171625" stroke-width="7"/>
+<path d="m116 40 9 34 10 15m85-61-13 46-11 16" stroke="#bc5662" stroke-width="5" fill="none"/>
+<!-- Cola larga con punta de flecha -->
+<path d="M215 161 259 172 280 191 304 192 287 203 261 198 241 189 207 191Z" fill="#242635" stroke="#10111b" stroke-width="8"/>
+<path d="m290 187 23-4-8 14-15 7" fill="#34303d" stroke="#10111b" stroke-width="5"/>
+<!-- Tronco cuadrúpedo -->
+<path d="M130 117 166 97 203 109 229 143 225 181 197 198 148 190 120 167Z" fill="#252936" stroke="#0e111b" stroke-width="8"/>
+<path d="M154 130 182 118 211 142 207 173 181 185 151 165Z" fill="#4a3544"/>
+<path d="m164 140 28 7m-27 9 29 7m-26 9 24 4" stroke="#8f4654" stroke-width="5"/>
+<!-- Patas traseras y garras -->
+<path d="M196 167 222 188 239 213 269 218 267 230 230 229 210 210 183 193Z" fill="#272a37" stroke="#0e111b" stroke-width="8"/>
+<path d="M163 166 154 190 148 217 172 222 169 231 132 231 125 214 131 180Z" fill="#272a37" stroke="#0e111b" stroke-width="8"/>
+<path d="m132 229-8 8m22-7-2 8m23-9 2 8m65-8-2 8m17-8 1 8m17-8 4 8" stroke="#d1c4b4" stroke-width="5"/>
+<!-- Cuello curvado, separado visualmente del cuerpo -->
+<path d="M142 133 116 110 100 89 87 78 71 79 65 99 85 115 104 140 121 159 147 154Z" fill="#272a38" stroke="#0d101b" stroke-width="8"/>
+<path d="m105 100 21 26 17 13" fill="none" stroke="#6d3c49" stroke-width="7"/>
+<!-- Espinas a lo largo de la nuca y espalda -->
+<path d="m84 80-7-28 20 22 3-29 15 36 10-21 13 40 12-20 13 27" fill="#37313f" stroke="#10111c" stroke-width="5"/>
+<!-- Cabeza larga de dragón de perfil mirando a la izquierda -->
+<path d="M84 77 64 62 44 61 34 69 28 80 12 86 4 100 20 108 46 109 62 99 82 105 97 94Z" fill="#272a37" stroke="#0d101b" stroke-width="7"/>
+<!-- Cuernos inequívocos -->
+<path d="m51 66-9-42 23 33 11-37 10 55" fill="#49414b" stroke="#0d101b" stroke-width="6"/>
+<!-- Mandíbula abierta, dientes -->
+<path d="M6 102 31 104 52 99 66 106 46 119 18 118Z" fill="#592d3d" stroke="#10111c" stroke-width="6"/>
+<path d="m13 104 5 10 6-9 7 10 6-10 6 9 7-11" fill="#f5e3c6"/>
+<!-- Ojo rojo y fosa nasal -->
+<rect x="45" y="76" width="12" height="7" fill="#fa4a35"/><rect x="49" y="76" width="5" height="4" fill="#fff0b6"/>
+<rect x="12" y="94" width="6" height="4" fill="#b95c60"/>
+<!-- Brazo delantero y garras -->
+<path d="M121 145 108 176 91 197 69 204 60 220 89 220 113 208 139 181Z" fill="#292b37" stroke="#10111c" stroke-width="8"/>
+<path d="m60 219-10 10m23-9-3 12m18-12 2 11" stroke="#e0c9b9" stroke-width="5"/>
+<!-- Reflejos y escamas -->
+<path d="m173 109 20 6 13 13-18-4m-72 25 13 7" fill="#6b4351"/>
 </svg>

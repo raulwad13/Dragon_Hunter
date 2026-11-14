@@ -1,91 +1,86 @@
 <div align="center">
-  <img src="https://w0.peakpx.com/wallpaper/921/922/HD-wallpaper-video-game-elden-ring-dragon.jpg" width="600" alt="Fantasy dragon"/>
+  <img src="assets/background/fondo.jpg" width="600" alt="Ilustración de fondo de Dragon Hunter"/>
   <h1>🐉 Dragon Hunter</h1>
-  <p>A browser-based RPG prototype where you explore, collect gold, upgrade weapons and fight increasingly powerful monsters.</p>
+  <p>Prototipo de RPG para navegador: explora, consigue oro, mejora tu equipo y enfréntate a monstruos cada vez más poderosos.</p>
 </div>
 
-## Project status
+> **Estado de la demo:** la interfaz publicada en GitHub Pages necesita una API Java/Spring Boot que no se ejecuta en GitHub Pages. Por ahora, **no es posible garantizar que se pueda jugar desde el enlace público**, especialmente desde el móvil. Consulta las instrucciones de ejecución local.
 
-The **Java 17 + Spring Boot REST API** in `backend/` now manages gameplay. The new browser interface uses HTML/CSS/JavaScript to send actions to the API and render its responses. This is a working architectural integration, but full end-to-end testing and game expansion remain in progress.
+## Estado del proyecto
 
-## Current features
+El backend REST de **Java 17 y Spring Boot** en `backend/` gestiona la lógica y el estado de la partida. La interfaz HTML, CSS y JavaScript envía acciones a esa API. La integración existe en el código, pero queda pendiente comprobar el recorrido completo en producción y desde un móvil real.
 
-- Player stats: XP, health and gold.
-- Store with health and weapon upgrades.
-- Cave encounters: slime, fanged beast and Fatalis.
-- Turn-based attack, dodge and escape actions.
-- Win, defeat and restart states.
-- Original browser UI and CSS background assets.
+## Funcionalidades
 
-## Technology
+- Estadísticas del personaje: experiencia, vida y oro.
+- Tienda con mejoras de salud y armas.
+- Encuentros en la cueva: slime, bestia y Fatalis.
+- Combates por turnos: atacar, esquivar y huir.
+- Estados de victoria, derrota y reinicio.
+- Interfaz visual adaptable, con recursos gráficos del proyecto.
 
-- **Frontend:** HTML5, CSS3 and JavaScript (legacy browser client).
-- **Backend migration:** Java 17, Spring Boot 3, Spring Web and Bean Validation.
-- **Build:** Maven.
+## Tecnologías
 
-## Run the original browser game
+- **Frontend:** HTML5, CSS3 y JavaScript.
+- **Backend:** Java 17, Spring Boot 3, Spring Web y Bean Validation.
+- **Compilación y pruebas:** Maven.
 
-The current interface requires the Spring Boot API running locally. The original JavaScript prototype remains in `JS/index.js`, `JS/fight.js`, `JS/location.js` and `JS/easterEgg.js` for reference, but is no longer loaded by the main page.
+## Ejecutar el juego en el ordenador
 
-## Run the Spring Boot API
+Necesitas Java 17 o posterior, Maven 3.9 o posterior y Python para servir la web.
 
-Requirements: Java 17+ and Maven 3.9+.
+En una terminal, desde la raíz del repositorio:
 
 ```bash
 cd backend
 mvn spring-boot:run
 ```
 
-The API listens on `http://localhost:8080`.
+La API estará disponible en `http://localhost:8080`.
 
-In a **second terminal**, from the repository root, run:
+En otra terminal, desde la raíz del repositorio:
 
 ```bash
 python -m http.server 5500
 ```
 
-Then open **http://localhost:5500** to play. The interface calls the Java API on port `8080` using the same hostname as the web page. Opening the HTML file directly may work in some browsers, but a local web server is recommended. Both services must be running.
+Abre **http://localhost:5500**. Mantén los dos servidores en ejecución: la web necesita comunicarse con la API para iniciar una partida.
 
-### Probar desde el móvil (misma red Wi-Fi)
+## Probar desde el móvil (misma red Wi-Fi)
 
-1. Inicia Spring Boot en el ordenador con `cd backend && mvn spring-boot:run`.
-2. Desde la raíz del proyecto, sirve la web con `python -m http.server 5500 --bind 0.0.0.0`.
-3. Averigua la IP local del ordenador (por ejemplo, `192.168.1.20`).
-4. En el teléfono, conectado a la **misma red Wi-Fi**, abre `http://IP_DEL_ORDENADOR:5500`.
-5. Comprueba que el cortafuegos permite las conexiones a los puertos `5500` y `8080` en la red local.
+1. Inicia Spring Boot en el ordenador.
+2. Desde la raíz del repositorio, ejecuta `python -m http.server 5500 --bind 0.0.0.0`.
+3. Averigua la dirección IP local del ordenador (por ejemplo, `192.168.1.20`).
+4. Conecta el móvil a la misma red Wi-Fi y abre `http://IP_DEL_ORDENADOR:5500`.
+5. Comprueba que el cortafuegos permite las conexiones locales a los puertos `5500` y `8080`.
 
-El teléfono no necesita instalar nada. **Esto no es un despliegue público** y aún falta comprobarlo con un móvil real. Evita abrir esos puertos a Internet sin una configuración segura.
+**Importante:** estas instrucciones no equivalen a un despliegue público. El acceso desde móvil está pendiente de verificación real. No abras esos puertos a Internet sin proteger y configurar el servidor.
 
-### REST endpoints
+## API REST
 
-| Method | Endpoint | Purpose |
+| Método | Ruta | Descripción |
 |---|---|---|
-| POST | `/api/games` | Create a game session |
-| GET | `/api/games/{id}` | Retrieve game state |
-| POST | `/api/games/{id}/actions` | Apply a game action |
+| POST | `/api/games` | Crear una partida |
+| GET | `/api/games/{id}` | Consultar el estado |
+| POST | `/api/games/{id}/actions` | Ejecutar una acción |
 
-Example request:
+Ejemplo de acción:
 
 ```json
 { "action": "FIGHT_SLIME" }
 ```
 
-Supported actions: `GO_TOWN`, `GO_STORE`, `GO_CAVE`, `FIGHT_SLIME`,
-`FIGHT_BEAST`, `FIGHT_DRAGON`, `BUY_HEALTH`, `BUY_WEAPON`,
-`ATTACK`, `DODGE`, `RUN` and `RESTART`.
+Acciones disponibles: `GO_TOWN`, `GO_STORE`, `GO_CAVE`, `FIGHT_SLIME`, `FIGHT_BEAST`, `FIGHT_DRAGON`, `BUY_HEALTH`, `BUY_WEAPON`, `ATTACK`, `DODGE`, `RUN` y `RESTART`.
 
-Game sessions currently live in server memory and reset when the API restarts. Persistent accounts and saved games are not implemented yet.
+Las partidas se almacenan en memoria y se reinician cuando se reinicia la API. Todavía no hay cuentas ni guardado persistente.
 
-## Roadmap
+## Pendiente para el portfolio
 
-- [x] Add a Spring Boot backend foundation and game-session API.
-- [x] Connect the browser interface to the REST API.
-- [x] Add an initial original pixel-inspired responsive UI.
-- [x] Add basic Spring Boot API integration test cases (not yet executed in this environment).
-- [ ] Execute and expand automated tests; add persistent game saves.
-- [ ] Expand locations, quests, equipment, skills and boss encounters.
-- [ ] Add original sprite sheets, world exploration, accessibility refinements and animations.
+- [ ] Publicar una demo jugable con un backend accesible y configurado correctamente.
+- [ ] Verificar el juego completo desde navegador y móvil.
+- [ ] Ampliar las pruebas automáticas y comprobar la integración de extremo a extremo.
+- [ ] Incorporar guardado de partidas y ampliar contenido y accesibilidad.
 
-## Author
+## Autor
 
-Created by **Raul Awad**.
+Proyecto de **Raul Awad**.

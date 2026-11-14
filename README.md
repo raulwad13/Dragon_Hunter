@@ -44,7 +44,17 @@ In a **second terminal**, from the repository root, run:
 python -m http.server 5500
 ```
 
-Then open **http://localhost:5500** to play. The interface calls `http://localhost:8080/api/games`. Opening the HTML file directly may work in some browsers, but a local web server is recommended. Both services must be running.
+Then open **http://localhost:5500** to play. The interface calls the Java API on port `8080` using the same hostname as the web page. Opening the HTML file directly may work in some browsers, but a local web server is recommended. Both services must be running.
+
+### Probar desde el móvil (misma red Wi-Fi)
+
+1. Inicia Spring Boot en el ordenador con `cd backend && mvn spring-boot:run`.
+2. Desde la raíz del proyecto, sirve la web con `python -m http.server 5500 --bind 0.0.0.0`.
+3. Averigua la IP local del ordenador (por ejemplo, `192.168.1.20`).
+4. En el teléfono, conectado a la **misma red Wi-Fi**, abre `http://IP_DEL_ORDENADOR:5500`.
+5. Comprueba que el cortafuegos permite las conexiones a los puertos `5500` y `8080` en la red local.
+
+El teléfono no necesita instalar nada. **Esto no es un despliegue público** y aún falta comprobarlo con un móvil real. Evita abrir esos puertos a Internet sin una configuración segura.
 
 ### REST endpoints
 

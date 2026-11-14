@@ -1,0 +1,20 @@
+name: Comprobar Dragon Hunter
+on:
+  push:
+  pull_request:
+jobs:
+  pruebas-java:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: backend/pom.xml
+      - name: Compilar y ejecutar pruebas
+        working-directory: backend
+        run: mvn --batch-mode verify
+      - name: Comprobar JavaScript
+        run: node --check JS/api-client.js

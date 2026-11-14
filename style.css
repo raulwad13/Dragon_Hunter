@@ -37,3 +37,12 @@
 .actions button[data-action="FIGHT_SLIME"]::before,.actions button[data-action="FIGHT_BEAST"]::before{width:30px;height:30px}
 .enemy-sprite{width:138px;height:138px;right:15%;bottom:19%;filter:drop-shadow(5px 8px 0 #12152588)}
 @media(max-width:480px){.enemy-sprite{width:106px;height:106px;right:7%;bottom:20%}}
+
+/* Escenarios diferenciados con ilustraciones pixel art locales. */
+.scene.town{background:#688f65 url("assets/background/town.svg") center/cover no-repeat}
+.scene.store{background:#765441 url("assets/background/store.svg") center/cover no-repeat}
+.scene.cave{background:#373e4b url("assets/background/cave.svg") center/cover no-repeat}
+.scene.fight{background:#584b57 url("assets/background/fight.svg") center/cover no-repeat}
+.scene.won{background:#688f65 url("assets/background/town.svg") center/cover no-repeat}
+.scene.lost{background:#584b57 url("assets/background/fight.svg") center/cover no-repeat;filter:grayscale(.8)}
+.scene .pixel-sun,.scene .cloud,.scene .mountains,.scene .ground,.scene .tree,.scene .path{display:none}

@@ -35,7 +35,7 @@ function demoAction(action) {
   if(action==="GO_TOWN"||action==="RUN"){d.screen="TOWN";d.monster=null;d.message="Has vuelto al pueblo.";return d;}
   if(action==="GO_STORE"||action==="GO_CAVE"){d.screen=action==="GO_STORE"?"STORE":"CAVE";d.message=d.screen==="STORE"?"Bienvenido a la tienda.":"Elige un enemigo en la cueva.";return d;}
   if(action==="BUY_HEALTH"){if(d.gold>=10){d.gold-=10;d.health=Math.min(100,d.health+10);d.message="Vida recuperada.";}else d.message="No tienes suficiente oro.";return d;}
-  if(action==="BUY_WEAPON"){if(d.weaponIndex===3)d.message="Ya tienes la mejor arma.";else if(d.gold<30)d.message="Necesitas 30 monedas.";else{d.gold-=30;d.weaponIndex++;d.weapon=demoWeapons[d.weaponIndex].name;d.inventory.push(d.weapon);d.message="Has comprado "+d.weapon+".";}return d;}
+  if(action==="BUY_WEAPON"){if(d.weaponIndex===3)d.message="Ya tienes la mejor arma.";else if(d.gold<(d.weaponIndex+1)*30)d.message="Necesitas "+((d.weaponIndex+1)*30)+" monedas.";else{d.gold-=(d.weaponIndex+1)*30;d.weaponIndex++;d.weapon=demoWeapons[d.weaponIndex].name;d.inventory.push(d.weapon);d.message="Has comprado "+d.weapon+".";}return d;}
   if(demoMonsters[action]){const m=demoMonsters[action];d.screen="FIGHT";d.monster=m[0];d.monsterHealth=m[1];d.enemyLevel=m[2];d.message="¡Aparece "+d.monster+"!";return d;}
   if(d.screen==="FIGHT"&&action==="DODGE"){d.message="¡Esquivas el ataque!";return d;}
   if(d.screen==="FIGHT"&&action==="ATTACK"){
@@ -98,7 +98,7 @@ function render(state) {
   for (const [label, action] of actionsByScreen[state.screen] || []) {
     const button = document.createElement("button");
     button.type = "button";
-    button.textContent = label;
+    button.textContent = action === "BUY_WEAPON" ? (state.inventory.length >= 4 ? "Arma al máximo" : "Mejorar arma · " + (state.inventory.length * 30) + " oro") : label;
     button.dataset.action = action;
     button.disabled = busy;
     button.addEventListener("click", () => doAction(action));

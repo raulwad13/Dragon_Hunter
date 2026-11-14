@@ -138,7 +138,7 @@ async function startGame() {
     $("#actions").replaceChildren();
   } finally {
     busy = false;
-    $("#newGame").disabled = false;
+    document.querySelectorAll("button").forEach(button => button.disabled = false);
   }
 }
 
